@@ -29,22 +29,33 @@ class Auth {
     return oauth2;
   }
 
+  private displayError(title: string, body: string): never {
+    const template = HtmlService.createTemplate(body);
+    const page = template.evaluate();
+    SpreadsheetApp.getUi().showModalDialog(page, title);
+    throw new Error(title);
+  }
+
   public getToken(): string {
     const service = this.getService();
+
+    if (!service.hasAccess()) {
+      this.displayError(
+        'OAuth2のアクセス権限がありません',
+        'OAuth2のアクセス権限がありません。再度、認証処理を行ってください。'
+      );
+      //program end
+    }
 
     let token = '';
     try {
       token = service.getAccessToken();
     } catch (e) {
-      const template = HtmlService.createTemplate(
+      this.displayError(
+        'アクセストークン取得エラー',
         'アクセストークン取得時にエラーが発生しました: ' + e.message
       );
-      const page = template.evaluate();
-      SpreadsheetApp.getUi().showModalDialog(
-        page,
-        'アクセストークン取得エラー'
-      );
-      throw e;
+      //program end
     }
 
     return token;
