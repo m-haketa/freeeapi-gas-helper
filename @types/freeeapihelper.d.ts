@@ -22,7 +22,11 @@ declare namespace ApiConst {
 declare namespace FreeeApiGasHelper {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   class FreeeApi {
-    constructor(logger?: ApiConst.LoggerInterface | undefined);
+    constructor(
+      clientId: string,
+      clientSecret: string,
+      logger?: ApiConst.LoggerInterface | undefined
+    );
 
     request(
       method: ApiConst.HttpMethod,
@@ -30,12 +34,8 @@ declare namespace FreeeApiGasHelper {
       params?: { [key: string]: any }
     ): any;
 
-    public login(clientId: string, clientSecret: string): void;
+    public login(): void;
     public logout(): void;
-    public authCallback(
-      request: any,
-      clientId: string,
-      clientSecret: string
-    ): GoogleAppsScript.HTML.HtmlOutput;
+    public authCallback(request: any): GoogleAppsScript.HTML.HtmlOutput;
   }
 }

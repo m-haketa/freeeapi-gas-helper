@@ -2,7 +2,7 @@ interface TypedTemplate extends GoogleAppsScript.HTML.HtmlTemplate {
   authorizationUrl: string;
 }
 
-interface AuthParams {
+export interface AuthParams {
   clientId: string;
   clientSecret: string;
   authorizeurl: string;
@@ -10,21 +10,25 @@ interface AuthParams {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class Auth {
+export class Auth {
+  private params: AuthParams;
+
+  constructor(params: AuthParams) {
+    this.params = params;
+  }
+
   //APIのサービスを取得
-  public getService(params: AuthParams | undefined = undefined): OAuth2 {
+  public getService(): OAuth2 {
     const oauth2 = OAuth2.createService('freee').setPropertyStore(
       PropertiesService.getUserProperties()
     );
 
-    if (params != undefined) {
-      oauth2
-        .setAuthorizationBaseUrl(params.authorizeurl)
-        .setTokenUrl(params.tokenUrl)
-        .setClientId(params.clientId)
-        .setClientSecret(params.clientSecret)
-        .setCallbackFunction('authCallback');
-    }
+    oauth2
+      .setAuthorizationBaseUrl(this.params.authorizeurl)
+      .setTokenUrl(this.params.tokenUrl)
+      .setClientId(this.params.clientId)
+      .setClientSecret(this.params.clientSecret)
+      .setCallbackFunction('authCallback');
 
     return oauth2;
   }
@@ -61,8 +65,8 @@ class Auth {
     return token;
   }
 
-  public login(params: AuthParams): void {
-    const service = this.getService(params);
+  public login(): void {
+    const service = this.getService();
     const authorizationUrl = service.getAuthorizationUrl();
     const template = HtmlService.createTemplate(
       '<a href="<?= authorizationUrl ?>" target="_blank">認証</a>. ' +
@@ -86,10 +90,9 @@ class Auth {
   //認証コールバック
   public authCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    request: any,
-    params: AuthParams
+    request: any
   ): GoogleAppsScript.HTML.HtmlOutput {
-    const service = this.getService(params);
+    const service = this.getService();
     const isAuthorized = service.handleCallback(request);
     if (isAuthorized) {
       return HtmlService.createHtmlOutput(

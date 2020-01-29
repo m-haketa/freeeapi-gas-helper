@@ -1,3 +1,5 @@
+import { ApiImpl } from './commonAPIImpl';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class FreeeApi {
   protected api_: ApiImpl;
@@ -8,8 +10,21 @@ class FreeeApi {
     tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const
   };
 
-  constructor(logger: ApiConst.LoggerInterface | undefined = undefined) {
-    this.api_ = new ApiImpl(this.FreeeApiConst_.apiurlbase, logger);
+  constructor(
+    clientId: string,
+    clientSecret: string,
+    logger: ApiConst.LoggerInterface | undefined = undefined
+  ) {
+    this.api_ = new ApiImpl(
+      this.FreeeApiConst_.apiurlbase,
+      {
+        authorizeurl: this.FreeeApiConst_.authorizeurl,
+        tokenUrl: this.FreeeApiConst_.tokenUrl,
+        clientId: clientId,
+        clientSecret: clientSecret
+      },
+      logger
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,9 +63,8 @@ class FreeeApi {
    * @param {string} clientSecret
    * @memberof FreeeApi
    */
-  public login(clientId: string, clientSecret: string): void {
-    const params = this.setAuthParams_(clientId, clientSecret);
-    this.api_.login(params);
+  public login(): void {
+    this.api_.login();
   }
 
   /**
@@ -64,12 +78,9 @@ class FreeeApi {
    */
   public authCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    request: any,
-    clientId: string,
-    clientSecret: string
+    request: any
   ): GoogleAppsScript.HTML.HtmlOutput {
-    const params = this.setAuthParams_(clientId, clientSecret);
-    return this.api_.authCallback(request, params);
+    return this.api_.authCallback(request);
   }
 
   /**
@@ -79,16 +90,5 @@ class FreeeApi {
    */
   public logout(): void {
     this.api_.logout();
-  }
-
-  private setAuthParams_(clientId: string, clientSecret: string): AuthParams {
-    const params = {} as AuthParams;
-
-    params.authorizeurl = this.FreeeApiConst_.authorizeurl;
-    params.tokenUrl = this.FreeeApiConst_.tokenUrl;
-    params.clientId = clientId;
-    params.clientSecret = clientSecret;
-
-    return params;
   }
 }

@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Auth, AuthParams } from './oauthWrapper';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ApiImpl {
+export class ApiImpl {
   private Logger_: ApiConst.LoggerInterface | undefined;
   private apiurlbase_: string;
   private auth_: Auth;
 
   public constructor(
     private apiurlbase: string,
+    private params: AuthParams,
     private logger: ApiConst.LoggerInterface | undefined = undefined
   ) {
     this.Logger_ = logger;
     this.apiurlbase_ = apiurlbase;
-    this.auth_ = new Auth();
+    this.auth_ = new Auth(params);
   }
 
   public request(
@@ -33,15 +35,12 @@ class ApiImpl {
     return items;
   }
 
-  public login(params: AuthParams): void {
-    this.auth_.login(params);
+  public login(): void {
+    this.auth_.login();
   }
 
-  public authCallback(
-    request: any,
-    params: AuthParams
-  ): GoogleAppsScript.HTML.HtmlOutput {
-    return this.auth_.authCallback(request, params);
+  public authCallback(request: any): GoogleAppsScript.HTML.HtmlOutput {
+    return this.auth_.authCallback(request);
   }
 
   public logout(): void {

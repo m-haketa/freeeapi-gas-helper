@@ -49,17 +49,17 @@ GASのスクリプトエディタで、下記ソースコードをコピペし�
 また、clientID、clientSecretを指定してください。
 
 ```JavaScript
-const freeeapi = new FreeeApiGasHelper.FreeeApi();
-
 const clientId = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 const clientSecret = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 
+const freeeapi = new FreeeApiGasHelper.FreeeApi(clientId, clientSecret);
+
 const authCallback = function(request: any): GoogleAppsScript.HTML.HtmlOutput {
-  return freeeapi.authCallback(request, clientId, clientSecret);
+  return freeeapi.authCallback(request);
 };
 
 function login(): void {
-  freeeapi.login(clientId, clientSecret);
+  freeeapi.login();
 }
 
 function logout(): void {
@@ -117,3 +117,4 @@ freeeへのログイン処理が必要です。
 最初に「function login()」を実行してください。
 
 
+### 変更履歴
