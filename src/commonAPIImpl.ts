@@ -29,10 +29,14 @@ export class ApiImpl {
 
     const res = this.sendAPIRequest_(method, urlPathFromBase, params);
 
-    const content = res.getContentText();
-    const items = JSON.parse(content);
-
-    return items;
+    try {
+      const content = res.getContentText();
+      const items = JSON.parse(content);
+      return items;
+    } catch {
+      //CSVデータの場合。Shift_JISコードのようなので、文字コード変換して返す
+      return res.getBlob().getDataAsString('Shift_JIS');
+    }
   }
 
   public login(): void {
