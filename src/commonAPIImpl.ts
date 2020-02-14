@@ -35,7 +35,7 @@ export class ApiImpl {
       return items;
     } catch {
       //CSVデータの場合。Shift_JISコードのようなので、文字コード変換して返す
-      return res.getBlob().getDataAsString('Shift_JIS');
+      return res.getContentText('Shift_JIS');
     }
   }
 
