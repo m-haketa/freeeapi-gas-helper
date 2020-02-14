@@ -110,13 +110,26 @@ export class ApiImpl {
     return res;
   }
 
+  private buildKeyValue_(key: string, value: string[] | string): string {
+    const objectType = Object.prototype.toString.call(value);
+    if (objectType === '[object Array]') {
+      return (value as string[])
+        .map((value, index) => {
+          return `${key}[]=` + encodeURIComponent(value);
+        })
+        .join('&');
+    } else {
+      return key + '=' + encodeURIComponent(value as string);
+    }
+  }
+
   private buildParams_(params: { [key: string]: any }): string {
     if (Object.keys(params).length === 0) {
       return '';
     }
 
     const paramstring = Object.keys(params)
-      .map<string>(key => key + '=' + encodeURIComponent(params[key]))
+      .map<string>(key => this.buildKeyValue_(key, params[key]))
       .join('&');
 
     return '?' + paramstring;
