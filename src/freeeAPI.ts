@@ -53,7 +53,8 @@ class FreeeApi {
     this.required_('method', method);
     this.required_('urlPathFromBase', urlPathFromBase);
 
-    return this.api_.request(method, urlPathFromBase, params);
+    const headers = { 'X-Api-Version': '2020-06-15' };
+    return this.api_.request(method, urlPathFromBase, params, headers);
   }
 
   /**

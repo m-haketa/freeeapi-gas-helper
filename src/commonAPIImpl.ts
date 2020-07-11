@@ -20,14 +20,15 @@ export class ApiImpl {
   public request(
     method: ApiConst.HttpMethod,
     urlPathFromBase: string,
-    params: { [key: string]: any } = {}
+    params: { [key: string]: any } = {},
+    headers: { [key: string]: string } = {}
   ): any {
     //paramsに明示的にundefinedが渡された場合にも対応できるように追記
     if (params === undefined) {
       params = {};
     }
 
-    const res = this.sendAPIRequest_(method, urlPathFromBase, params);
+    const res = this.sendAPIRequest_(method, urlPathFromBase, params, headers);
 
     try {
       const content = res.getContentText();
