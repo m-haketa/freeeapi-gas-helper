@@ -5,7 +5,7 @@ class FreeeApi {
   protected api_: ApiImpl;
 
   private FreeeApiConst_ = {
-    apiurlbase: 'https://api.freee.co.jp/api/1' as const,
+    apiurlbase: 'https://api.freee.co.jp' as const,
     authorizeurl: 'https://secure.freee.co.jp/oauth/authorize' as const,
     tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const
   };
@@ -38,7 +38,7 @@ class FreeeApi {
    * APIへのアクセスをする
    *
    * @param {ApiConst.HttpMethod} method GET、POST、PUT、DELETEのいずれかを指定
-   * @param {string} urlPathFromBase アクセス先のAPIのアクセスポイント（例：/account_items/{id}）を指定
+   * @param {string} urlPathFromBase アクセス先のAPIのアクセスポイント（例：/api/1/account_items/{id}）を指定
    * @param {{ [key: string]: any }} [params={}] API呼び出し時に使う引数を、オブジェクトで指定　※URLパラメータも、ここで指定する
    * @returns {*} 返り値をオブジェクトに変換したデータ
    * @memberof FreeeApi

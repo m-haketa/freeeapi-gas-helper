@@ -106,7 +106,6 @@ const companiesRoot = freeeapi.request('get', '/companies');
   });
 ```
 
-
 ## トラブルシューティング
 
 ### Access not granted or expired
@@ -134,3 +133,7 @@ freeeへのログイン処理が必要です。
 #### Ver0.5（GASライブラリバージョン 5）
 - 2020年6月に提供を開始した新仕様のAPIを使用するように修正
 →[【重要】2020年12月の会計freee APIの仕様変更について](https://developer.freee.co.jp/release-note/2948)
+
+#### Ver0.6（GASライブラリバージョン 5） ※重要
+- APIのurlbaseを'https://api.freee.co.jp/api/1'から'https://api.freee.co.jp'に変更。
+これに伴い、**freeeapi.request呼び出し時のアクセスポイントを「/companies」→「/api/1/companies」など、先頭に「/api/1」を付けるように変更する必要があります**。
