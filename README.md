@@ -130,3 +130,7 @@ freeeへのログイン処理が必要です。
 
 #### Ver0.4
 - 引数に配列を渡したときにQueryStringsに正しく変換できるように修正
+
+#### Ver0.5
+- 2020年6月に提供を開始した新仕様のAPIを使用するように修正
+→[【重要】2020年12月の会計freee APIの仕様変更について](https://developer.freee.co.jp/release-note/2948)
