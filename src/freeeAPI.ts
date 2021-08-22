@@ -7,7 +7,7 @@ class FreeeApi {
   private FreeeApiConst_ = {
     apiurlbase: 'https://api.freee.co.jp' as const,
     authorizeurl: 'https://secure.freee.co.jp/oauth/authorize' as const,
-    tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const
+    tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const,
   };
 
   // ^/api/[0-9]/
@@ -24,7 +24,7 @@ class FreeeApi {
         authorizeurl: this.FreeeApiConst_.authorizeurl,
         tokenUrl: this.FreeeApiConst_.tokenUrl,
         clientId: clientId,
-        clientSecret: clientSecret
+        clientSecret: clientSecret,
       },
       logger
     );

@@ -44,7 +44,7 @@ export class ApiImpl {
     this.auth_.login();
   }
 
-  public authCallback(request: any): GoogleAppsScript.HTML.HtmlOutput {
+  public authCallback(request: unknown): GoogleAppsScript.HTML.HtmlOutput {
     return this.auth_.authCallback(request);
   }
 
@@ -89,7 +89,7 @@ export class ApiImpl {
     const options = {
       method: method,
       headers: headers,
-      muteHttpExceptions: true
+      muteHttpExceptions: true,
     } as any;
 
     if (method === 'get') {
@@ -115,7 +115,7 @@ export class ApiImpl {
     const objectType = Object.prototype.toString.call(value);
     if (objectType === '[object Array]') {
       return (value as string[])
-        .map(value => {
+        .map((value) => {
           return `${key}[]=` + encodeURIComponent(value);
         })
         .join('&');
@@ -130,7 +130,7 @@ export class ApiImpl {
     }
 
     const paramstring = Object.keys(params)
-      .map(key => this.buildKeyValue_(key, params[key]))
+      .map((key) => this.buildKeyValue_(key, params[key]))
       .join('&');
 
     return '?' + paramstring;
@@ -169,7 +169,7 @@ export class ApiImpl {
 
     return {
       params: paramsDeleted,
-      urlPathFromBase: urlPathReplaced
+      urlPathFromBase: urlPathReplaced,
     };
   }
 }

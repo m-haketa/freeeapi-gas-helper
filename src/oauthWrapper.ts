@@ -86,7 +86,7 @@ export class Auth {
   //認証コールバック
   public authCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    request: any
+    request: unknown
   ): GoogleAppsScript.HTML.HtmlOutput {
     const service = this.getService();
     const isAuthorized = service.handleCallback(request);
