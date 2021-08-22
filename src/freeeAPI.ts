@@ -10,6 +10,9 @@ class FreeeApi {
     tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const
   };
 
+  // ^/api/[0-9]/
+  private urlPathFromBaseRegex = /^\/api\/[0-9]\//;
+
   constructor(
     clientId: string,
     clientSecret: string,
@@ -53,6 +56,12 @@ class FreeeApi {
     this.required_('method', method);
     this.required_('urlPathFromBase', urlPathFromBase);
 
+    if (!this.urlPathFromBaseRegex.test(urlPathFromBase)) {
+      throw new Error(
+        `urlPathFromBaseの形式が正しくありません。「/api/」の部分から指定してください。`
+      );
+    }
+
     const headers = { 'X-Api-Version': '2020-06-15' };
     return this.api_.request(method, urlPathFromBase, params, headers);
   }
@@ -66,6 +75,10 @@ class FreeeApi {
    */
   public login(): void {
     this.api_.login();
+
+    console.info(
+      `（必要に応じて）スプレッドシートの操作画面に切り替えて、表示されたウィンドウから手動で認証処理をしてください。`
+    );
   }
 
   /**
