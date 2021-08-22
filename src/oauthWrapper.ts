@@ -11,11 +11,7 @@ export interface AuthParams {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class Auth {
-  private params: AuthParams;
-
-  constructor(params: AuthParams) {
-    this.params = params;
-  }
+  constructor(private params: AuthParams) {}
 
   //APIのサービスを取得
   public getService(): OAuth2 {

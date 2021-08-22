@@ -8,9 +8,9 @@ export class ApiImpl {
   private auth_: Auth;
 
   public constructor(
-    private apiurlbase: string,
-    private params: AuthParams,
-    private logger: ApiConst.LoggerInterface | undefined = undefined
+    apiurlbase: string,
+    params: AuthParams,
+    logger: ApiConst.LoggerInterface | undefined = undefined
   ) {
     this.Logger_ = logger;
     this.apiurlbase_ = apiurlbase;
@@ -115,7 +115,7 @@ export class ApiImpl {
     const objectType = Object.prototype.toString.call(value);
     if (objectType === '[object Array]') {
       return (value as string[])
-        .map((value, index) => {
+        .map(value => {
           return `${key}[]=` + encodeURIComponent(value);
         })
         .join('&');
@@ -130,7 +130,7 @@ export class ApiImpl {
     }
 
     const paramstring = Object.keys(params)
-      .map<string>(key => this.buildKeyValue_(key, params[key]))
+      .map(key => this.buildKeyValue_(key, params[key]))
       .join('&');
 
     return '?' + paramstring;
