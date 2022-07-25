@@ -53,7 +53,8 @@ export class Auth {
     } catch (e) {
       this.displayError(
         'アクセストークン取得エラー',
-        'アクセストークン取得時にエラーが発生しました: ' + e.message
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        'アクセストークン取得時にエラーが発生しました: ' + (e as any).message
       );
       //program end
     }
