@@ -6,8 +6,9 @@ class FreeeApi {
 
   private FreeeApiConst_ = {
     apiurlbase: 'https://api.freee.co.jp' as const,
-    authorizeurl: 'https://secure.freee.co.jp/oauth/authorize' as const,
-    tokenUrl: 'https://secure.freee.co.jp/oauth/token' as const,
+    authorizeurl:
+      'https://accounts.secure.freee.co.jp/public_api/authorize' as const,
+    tokenUrl: 'https://accounts.secure.freee.co.jp/public_api/token' as const,
   };
 
   // ^/api/[0-9]/
